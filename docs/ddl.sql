@@ -24,7 +24,8 @@ CREATE  TABLE IF NOT EXISTS dbproject.Ads (
   description TEXT NOT NULL ,
   category VARCHAR(32) NOT NULL ,
   creation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
-  fk_username VARCHAR(16),
-  FOREIGN KEY (fk_username) REFERENCES dbproject.Users(username),
-  PRIMARY KEY (id,fk_username))
+  fk_username VARCHAR(16) NOT NULL,
+  FOREIGN KEY (fk_username) REFERENCES dbproject.Users(username)
+	ON DELETE CASCADE ON UPDATE CASCADE,
+  PRIMARY KEY (id))
 ENGINE = InnoDB;
