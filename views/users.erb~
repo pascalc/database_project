@@ -13,8 +13,8 @@
 
 <h1>List of Users</h1>
 <hr/>
-
-<table id="users" summary="List of Users">
+Logged in as: <%= session["username"] %>
+<table class="striped_table" summary="List of Users">
     <thead>
     	<tr>
         	<th scope="col">Username</th>

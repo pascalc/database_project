@@ -26,13 +26,19 @@ get '/ads/list' do
   erb :ads
 end
 
+# Show new ad form
+get '/ads/new' do
+   return "Please log in first" unless session["username"]
+   erb :new_ad
+end
+
 # Create a new ad
 post '/new_ad' do
    title = params['title']
    description = params['description']
    category = params['category']
    DB["INSERT INTO Ads (id, title, description, category, creation_date, fk_username)
-                VALUES (null, ?, ?, ?, null, '1Yea')", title, description, category].insert
+                VALUES (null, ?, ?, ?, null, ?)", title, description, category,session["username"]].insert
    redirect '/ads/list'
 end
 
@@ -42,6 +48,9 @@ post '/new_user' do
    password = params['password']
    email = params['email']
    DB["INSERT INTO Users VALUES (?,?,?,null)",username,password,email].insert
+
+   session["username"] = username
+
    redirect '/users/list'
 end
 
@@ -53,5 +62,14 @@ post '/login' do
    result = DB["SELECT username,password FROM Users WHERE username = ? AND password = ?",username,password]
    return "Don't try and hack me, #{username} = bad boy!" if result.empty?
 
+   session["username"] = username
+
    "Welcome back #{username}!"
+end
+
+# Log out
+get '/logout' do
+   username = session["username"]
+   session["username"] = nil
+   "Goodbye #{username}!"
 end
