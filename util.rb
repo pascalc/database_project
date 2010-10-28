@@ -13,7 +13,7 @@ module Util
 	end
 
 	def Util::random_string(length = 5)
-		Util::rand_from_arrays(length,("A".."Z"),("a".."z"),("0".."9"))
+		Util::rand_from_arrays(length,("A".."Z"),("a".."z"),("0".."9"),[" "])
 	end
 
 	def Util::random_number(length = 4)
