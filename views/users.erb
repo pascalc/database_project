@@ -11,7 +11,10 @@
 </head>
 <body>
 
-<table id="users" summary="List of Users">
+<h1>List of Users</h1>
+<hr/>
+
+<table class="striped_table" summary="List of Users">
     <thead>
     	<tr>
         	<th scope="col">Username</th>
@@ -21,17 +24,19 @@
         </tr>
     </thead>
     <tbody>
-		  <% SIZE.times do |i| %>
+        <% i = 0 %>
+		  <% @users.each do |row| %>
 		  		<% if i % 2 == 0 %>
         			<tr>
         		<% else %>
         			<tr class="odd">
         		<% end %>
-        				<td><%= @usernames[i] %></td>
-        				<td><%= @passwords[i] %></td>
-            		<td><%= @emails[i] %></td>
-            		<td><%= @dates[i] %></td>
+        				<td><%= row[:username] %></td>
+        				<td><%= row[:password] %></td>
+            		<td><%= row[:email] %></td>
+            		<td><%= row[:creation_date] %></td>
         		</tr>
+        	<% i += 1 %>
         	<% end %>
     </tbody>
 </table>

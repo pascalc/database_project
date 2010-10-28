@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Users</title>
+<title>Ads</title>
 <style type="text/css">
 <!--
 @import url("/css/style.css");
@@ -14,27 +14,31 @@
 <h1>List of Users</h1>
 <hr/>
 
-<table id="users" summary="List of Users">
+<table class="striped_table" summary="List of Ads">
     <thead>
     	<tr>
-        	<th scope="col">Username</th>
-            <th scope="col">Password</th>
-            <th scope="col">Email</th>
-            <th scope="col">Creation date</th>
+        	<th scope="col">ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Category</th>
+            <th scope="col">Creation Date</th>
+            <th scope="col">Posted by</th>
         </tr>
     </thead>
     <tbody>
         <% i = 0 %>
-		  <% @users.each do |row| %>
+		  <% @ads.each do |row| %>
 		  		<% if i % 2 == 0 %>
         			<tr>
         		<% else %>
         			<tr class="odd">
         		<% end %>
-        				<td><%= row[:username] %></td>
-        				<td><%= row[:password] %></td>
-            		<td><%= row[:email] %></td>
+        				<td><%= row[:id] %></td>
+        				<td><%= row[:title] %></td>
+            		<td><%= row[:description][0..10] %></td>
+            		<td><%= row[:category] %></td>
             		<td><%= row[:creation_date] %></td>
+            		<td><%= row[:fk_username] %></td>
         		</tr>
         	<% i += 1 %>
         	<% end %>

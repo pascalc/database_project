@@ -30,11 +30,18 @@ end
 
 # Populate Ads
 
-CATEGORIES = ["books", "electronics"]
+CATEGORIES = ["books", "electronics", "appliances", "personal", "jobs"]
 
 ads = DB[:Ads]
-NUM_ADS.times do 
+NUM_ADS.times do
+	owner = nil
+        DB["SELECT username FROM Users ORDER BY RAND() LIMIT 1"].each do |r|
+		owner = r[:username]
+	end	
 	ads.insert(:id => nil,
-		   :title => Util::random_string(4+rand(6))
-       		   :description => Util::random_string(50+rand(100))
-	   	   :category 	   
+		   :title => Util::random_string(4+rand(6)),
+       		   :description => Util::random_string(50+rand(100)),
+	   	   :category => CATEGORIES[rand(CATEGORIES.size)],
+		   :creation_date => nil,
+		   :fk_username => owner)
+end	

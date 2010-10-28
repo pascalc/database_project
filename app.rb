@@ -3,16 +3,21 @@
 require 'rubygems'
 require 'sinatra'
 require 'erb'
+require 'sequel'
 require 'util.rb'
 
-SIZE = 10
+# Set up the database connection
 
-get '/users/list' do 
-  @usernames = (1..SIZE).to_a.map { Util::random_string(4+rand(6)) }
-  @passwords = (1..SIZE).to_a.map { Util::random_string(6+rand(4)) }
-  @emails = (1..SIZE).to_a.map do 
-	  Util::random_string(1+rand(4)) + "@" + Util::random_string(1+rand(4)) + ".com"
-  end
-  @dates = (1..SIZE).to_a.map { Util::random_number(6+rand(4)) }
+DB = Sequel.mysql('dbproject',:host => "localhost", :user => "pascal", :password => "dbproject")
+
+# Routes
+
+get '/users/list' do
+  @users = DB["SELECT * FROM Users"]
   erb :users
+end
+
+get '/ads/list' do 
+  @ads = DB["SELECT * FROM Ads"]
+  erb :ads
 end
