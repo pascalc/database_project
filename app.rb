@@ -21,3 +21,8 @@ get '/ads/list' do
   @ads = DB["SELECT * FROM Ads"]
   erb :ads
 end
+
+post '/new_ad' do
+	"Created a new ad"
+	puts "Number of rows returned: #{res.num_rows}"
+end
