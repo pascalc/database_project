@@ -35,7 +35,7 @@
         		<% end %>
         				<td><%= row[:id] %></td>
         				<td><%= row[:title] %></td>
-            		<td><%= row[:description][0..10] %></td>
+            		<td><%= row[:description][0..15] + "..." %></td>
             		<td><%= row[:category] %></td>
             		<td><%= row[:creation_date] %></td>
             		<td><%= row[:fk_username] %></td>
