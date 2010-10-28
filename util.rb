@@ -6,6 +6,7 @@ module Util
 
 			x + y		
 		end
+		options = options.to_a unless options.is_a? Array
 		res = ""
 		length.times { res << options[rand(options.size)] }
 		return res
