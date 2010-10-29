@@ -12,7 +12,8 @@
 <body>
 
 <h1>[Users]</h1>
-<div class="loggedin"><p><% if session["username"] %>Logged in as: <%= session["username"] %><% end %></p></div>
+<%= erb :_loggedin %>
+<%= erb :_flash %>
 <div class="message"><p><% if session["message"] %><%= session["message"] %><% session["message"] = nil; end %></p></div>
 <hr/>
 <table class="striped_table" summary="List of Users">

@@ -12,7 +12,7 @@
 <body>
 
 <h1>[<% if @tag %><%= @tag.capitalize %><% else %>Ads<% end %>]</h1>
-<div class="loggedin"><p><% if session["username"] %><em>Logged in as: <%= session["username"] %> </em> <% end %></p><div class="loggedin">
+<%= erb :_loggedin %>
 <div class="message"><p><% if session["message"] %><%= session["message"] %><% session["message"] = nil; end %></p></div>
 <hr/>
 

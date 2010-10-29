@@ -12,7 +12,7 @@
 <body>
 
 <p><h1><center>Create New User</center></h1></p> 
-<div class="message"><p><% if session["message"] %><%= session["message"] %><% session["message"] = nil; end %></p></div>
+<%= erb :_flash %>
 <hr><br/>
 
 <form name="new_user" action="/new_user" method="post">

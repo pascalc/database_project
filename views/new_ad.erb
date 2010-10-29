@@ -12,8 +12,8 @@
 <body>
 
 <p><h1><center>Maybe some general bullshit text </center></h1></p>
-<div class="loggedin"><p><% if session["username"] %>Logged in as: <%= session["username"] %><% end %></p></div>
-<div class="message"><p><% if session["message"] %><%= session["message"] %><% session["message"] = nil; end %></p></div>
+<%= erb :_loggedin %>
+<%= erb :_flash %>
 <hr><br/>
 <form name="new_ad" action="/new_ad" method="post">
 Title *<br/>
