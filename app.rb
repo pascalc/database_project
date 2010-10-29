@@ -34,7 +34,10 @@ end
 
 # Show new ad form
 get '/ads/new' do
-   return "Please log in first" unless session["username"]
+   if not session["username"]
+      session["message"] = "Please log in first"
+      redirect '/'
+   end
    erb :new_ad
 end
 
@@ -45,6 +48,7 @@ post '/new_ad' do
    category = params['category']
    DB["INSERT INTO Ads (id, title, description, category, creation_date, fk_username)
                 VALUES (null, ?, ?, ?, null, ?)", title, description, category,session["username"]].insert
+   session["message"] = "Created a new ad!"
    redirect '/ads/list'
 end
 
@@ -52,7 +56,10 @@ end
 get '/tag/*' do
    @tag = params["splat"].first
    @ads = DB["SELECT * FROM Ads WHERE category = ? ORDER BY creation_date DESC",@tag]
-   return "We don't have a #{@tag} category." if @ads.empty?
+   if @ads.empty?
+   	session["message"] = "We don't have a #{@tag} category."
+        redirect '/ads/list'
+   end	
    erb :ads 
 end
 
@@ -69,7 +76,7 @@ post '/new_user' do
    DB["INSERT INTO Users VALUES (?,?,?,null)",username,password,email].insert
 
    session["username"] = username
-
+   session["message"] = "Welcome, #{username}!"
    redirect '/users/list'
 end
 
@@ -79,16 +86,20 @@ post '/login' do
    password = params['password']
    
    result = DB["SELECT username,password FROM Users WHERE username = ? AND password = ?",username,password]
-   return "Don't try and hack me, #{username} = bad boy!" if result.empty?
+   if result.empty?
+      session["message"] = "Log in failed, please try again."
+      redirect '/'
+   end
 
    session["username"] = username
-
-   "Welcome back #{username}!"
+   session["message"] = "Welcome back #{username}!"
+   redirect '/ads/list'
 end
 
 # Log out
 get '/logout' do
    username = session["username"]
    session["username"] = nil
-   "Goodbye #{username}!"
+   session["message"] = "Goodbye #{username}!"
+   redirect '/'
 end

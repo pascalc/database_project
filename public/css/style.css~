@@ -1,3 +1,13 @@
+/* Styling for the logged in and flash messages */
+div.message
+{
+	color: blue;  
+}
+div.loggedin
+{
+	font-style: italic;
+}
+
 /* ------------------
  styling for the tables 
    ------------------   */
@@ -41,7 +51,7 @@ div.container
 	/*width:100%;*/
 	margin:50px;
 	margin-left:50px;
-	border:1px #e8edff;
+	border:1px solid gray;
 	line-height:150%;
 }
 
@@ -50,7 +60,7 @@ div.header, div.footer
 	font-size: 14px;
 	padding:0.5em;
 	color:white;
-	background-color:#e8edff;
+	background-color:gray;
 	clear:left;
 }
 
