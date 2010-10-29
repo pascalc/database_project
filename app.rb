@@ -64,8 +64,8 @@ post '/new_ad' do
 end
 
 # Category listings
-get '/tag/*' do
-   @tag = params["splat"].first
+get '/tag/:cat' do |cat|
+   @tag = cat
    @ads = DB["SELECT * FROM Ads WHERE category = ? ORDER BY creation_date DESC",@tag]
    if @ads.empty?
    	session["message"] = "We don't have a #{@tag} category."
