@@ -14,6 +14,11 @@ DB = Sequel.mysql('dbproject',:host => "localhost", :user => "pascal", :password
 
 ########### ROUTES ###############
 
+# Index
+get '/' do
+   redirect '/index.html'
+end
+
 # List all users
 get '/users/list' do
   @users = DB["SELECT * FROM Users ORDER BY creation_date DESC"]
@@ -21,7 +26,8 @@ get '/users/list' do
 end
 
 # List all ads
-get '/ads/list' do 
+get '/ads/list' do
+  @tag = nil	
   @ads = DB["SELECT * FROM Ads ORDER BY creation_date DESC"]
   erb :ads
 end
@@ -40,6 +46,19 @@ post '/new_ad' do
    DB["INSERT INTO Ads (id, title, description, category, creation_date, fk_username)
                 VALUES (null, ?, ?, ?, null, ?)", title, description, category,session["username"]].insert
    redirect '/ads/list'
+end
+
+# Category listings
+get '/tag/*' do
+   @tag = params["splat"].first
+   @ads = DB["SELECT * FROM Ads WHERE category = ? ORDER BY creation_date DESC",@tag]
+   return "We don't have a #{@tag} category." if @ads.empty?
+   erb :ads 
+end
+
+# Show new user form
+get '/users/new' do
+   redirect '/new_user.html'
 end
 
 # Create new user

@@ -11,7 +11,8 @@
 </head>
 <body>
 
-<h1>List of Ads</h1>
+<h1>List of Ads <% if @tag %> filed under <%= @tag %> <% end %></h1>
+<% if session["username"] %><em>Logged in as: <%= session["username"] %> </em> <% end %>
 <hr/>
 
 <table class="striped_table" summary="List of Ads">
