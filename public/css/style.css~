@@ -38,9 +38,10 @@ td
 div.container
 {
 	font-size: 14px;	
-	width:100%;
+	/*width:100%;*/
 	margin:50px;
-	border:1px solid gray;
+	margin-left:50px;
+	border:1px #e8edff;
 	line-height:150%;
 }
 
@@ -49,38 +50,40 @@ div.header, div.footer
 	font-size: 14px;
 	padding:0.5em;
 	color:white;
-	background-color:gray;
+	background-color:#e8edff;
 	clear:left;
 }
 
 h1.header
 {
 	padding:0;
-	margin:0;
+	/*margin:10px;*/
+	float:center;
 }
 
 div.left
 {
 	font-size: 14px;
 	float:left;
-	/*width:160px;*/
-	margin:50px;
+	width:160px;
+	margin:0px;
 	padding:1em;
+	border-right:1px solid gray;
 }
 
 div.right
 {
 	font-size: 14px;
 	float:right;
-	/*width:160px;*/
-	margin:50px;
+	width:160px;
+	margin:0px;
 	padding:1em;
+	border-left:1px solid gray;
 }
 
 div.content
 {
 	font-size: 14px;
 	margin-left:190px;
-	border-left:1px solid gray;
 	padding:1em;
 }
