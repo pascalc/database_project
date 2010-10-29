@@ -12,7 +12,7 @@
 <body>
 
 <h1>[Users]</h1>
-<% if session["username"] %><em>Logged in as: <%= session["username"] %> </em> <% end %>
+<div class="loggedin"><p><% if session["username"] %>Logged in as: <%= session["username"] %><% end %></p></div>
 <div class="message"><p><% if session["message"] %><%= session["message"] %><% session["message"] = nil; end %></p></div>
 <hr/>
 <table class="striped_table" summary="List of Users">
@@ -27,7 +27,7 @@
     <tbody>
         <% i = 0 %>
 		  <% @users.each do |row| %>
-		  		<% if i % 2 == 0 %>
+		  		<% if i % 2 == 1 %>
         			<tr>
         		<% else %>
         			<tr class="odd">

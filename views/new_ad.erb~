@@ -5,14 +5,13 @@
 <title>Top 10 Express Table Designs - Smashing Magazine Source</title>
 <style type="text/css">
 <!--
-@import url("css/style.css");
+@import url("/css/style.css");
 -->
 </style>
 </head>
 <body>
 
 <p><h1><center>Maybe some general bullshit text </center></h1></p>
-<% if session["message"] %><%= session["message"] %><% session["message"] = nil; end %>
 <div class="loggedin"><p><% if session["username"] %>Logged in as: <%= session["username"] %><% end %></p></div>
 <div class="message"><p><% if session["message"] %><%= session["message"] %><% session["message"] = nil; end %></p></div>
 <hr><br/>

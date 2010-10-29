@@ -46,10 +46,21 @@ post '/new_ad' do
    title = params['title']
    description = params['description']
    category = params['category']
-   DB["INSERT INTO Ads (id, title, description, category, creation_date, fk_username)
+   
+   if title.length == 0 or description.length == 0 or category.length == 0
+        session["message"] = "Please enter a title, description and category."
+	redirect '/ads/new'
+   end
+
+   begin 
+   	DB["INSERT INTO Ads (id, title, description, category, creation_date, fk_username)
                 VALUES (null, ?, ?, ?, null, ?)", title, description, category,session["username"]].insert
-   session["message"] = "Created a new ad!"
-   redirect '/ads/list'
+   	session["message"] = "Created a new ad!"
+   	redirect '/ads/list'
+   rescue
+	session["message"] = "Something went wrong..."
+     	redirect '/ads/new'
+   end	
 end
 
 # Category listings
@@ -65,7 +76,7 @@ end
 
 # Show new user form
 get '/users/new' do
-   redirect '/new_user.html'
+   erb :new_user
 end
 
 # Create new user
@@ -73,7 +84,18 @@ post '/new_user' do
    username = params['username']
    password = params['password']
    email = params['email']
-   DB["INSERT INTO Users VALUES (?,?,?,null)",username,password,email].insert
+
+   if username.length == 0 or password.length == 0 or email.length == 0
+        session["message"] = "Please enter a username, password and email."
+	redirect '/users/new'
+   end
+
+   begin 
+   	DB["INSERT INTO Users VALUES (?,?,?,null)",username,password,email].insert
+   rescue
+	session["message"] = "Sorry, we already have a user called #{username}."
+	redirect '/users/new'
+   end
 
    session["username"] = username
    session["message"] = "Welcome, #{username}!"

@@ -5,7 +5,7 @@
 <title>Create new user</title>
 <style type="text/css">
 <!--
-@import url("/css/style.css");
+@import url("css/style.css");
 -->
 </style>
 </head>
