@@ -12,7 +12,7 @@
 <body>
 
 <div class="container">
-<div class="header"><h1 class="header"><center>This is the the header!</center><h1></div>
+<div class="header"><h1 class="header">This is the the header!<h1></div>
 <div class="left">
 	<form name="login" action="/login" method="post">
 		Username: <input type="text" name="username" id="username" value=""/><br />

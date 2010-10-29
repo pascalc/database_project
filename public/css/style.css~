@@ -34,11 +34,12 @@ td
 	background: #e8edff; 
 }
 
+/* This is the layout for the index page */
 div.container
 {
 	font-size: 14px;	
 	width:100%;
-	margin:0px;
+	margin:50px;
 	border:1px solid gray;
 	line-height:150%;
 }
@@ -62,8 +63,8 @@ div.left
 {
 	font-size: 14px;
 	float:left;
-	width:160px;
-	margin:0;
+	/*width:160px;*/
+	margin:50px;
 	padding:1em;
 }
 
@@ -71,8 +72,8 @@ div.right
 {
 	font-size: 14px;
 	float:right;
-	width:160px;
-	margin:0;
+	/*width:160px;*/
+	margin:50px;
 	padding:1em;
 }
 
