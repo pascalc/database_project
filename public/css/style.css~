@@ -8,7 +8,7 @@ body
 	line-height: 1.6em;
 }
 
-#users
+.striped_table
 {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
 	font-size: 14px;
@@ -32,4 +32,54 @@ td
 .odd
 {
 	background: #e8edff; 
+}
+
+div.container
+{
+	font-size: 14px;	
+	width:100%;
+	margin:0px;
+	border:1px solid gray;
+	line-height:150%;
+}
+
+div.header, div.footer
+{
+	font-size: 14px;
+	padding:0.5em;
+	color:white;
+	background-color:gray;
+	clear:left;
+}
+
+h1.header
+{
+	padding:0;
+	margin:0;
+}
+
+div.left
+{
+	font-size: 14px;
+	float:left;
+	width:160px;
+	margin:0;
+	padding:1em;
+}
+
+div.right
+{
+	font-size: 14px;
+	float:right;
+	width:160px;
+	margin:0;
+	padding:1em;
+}
+
+div.content
+{
+	font-size: 14px;
+	margin-left:190px;
+	border-left:1px solid gray;
+	padding:1em;
 }
