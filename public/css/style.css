@@ -25,6 +25,11 @@ color: #D8000C;
 background-color: #FFBABA;
 }
 
+/* General */
+div.left {
+	text-align: left;
+}
+
 /* ------------------
  styling for the tables 
    ------------------   */

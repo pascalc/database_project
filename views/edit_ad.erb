@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Edit Ad</title>
+<style type="text/css">
+<!--
+@import url("/css/style.css");
+-->
+</style>
+</head>
+<body>
+
+<p><h1>Edit Ad</h1></p>
+<%= erb :_loggedin %>
+<%= erb :_flash %>
+<hr><br/>
+<% ad = ad.first %>
+<form name="edit_ad" action="/edit_ad/<%= ad[:id] %>" method="post">
+Title *<br/>
+<input type="text" name="title" id="title" value="<%= ad[:title]%>"/><br />
+Category *<br/>
+<input type="text" name="category" id="category" value="<%= ad[:category]%>"/><br />
+Description *<br/>
+<textarea rows="10" cols="100" type="text" name="description" value=""><%= ad[:description]%></textarea> 
+<br/> <input type="submit" value="Submit" />
+
+<br/><br/><hr>
+<p><h2>Maybe some other bullshit here</h2></p>
+</form>
+
+</body>
+</html>

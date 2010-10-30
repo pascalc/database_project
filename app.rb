@@ -12,6 +12,22 @@ enable :sessions
 
 DB = Sequel.mysql('dbproject',:host => "localhost", :user => "pascal", :password => "dbproject")
 
+# Helper functions
+
+# Check if the logged in user is allowed to alter this ad 
+def check_allowed(id)
+   if not session["username"]
+	session["warning"] = "Please log in first."
+	redirect '/'
+   end
+   DB["SELECT * FROM Ads WHERE id = ?",id].each do |ad|
+	if not ad[:fk_username] == session["username"]
+		session["error"] = "Don't be naughty now."
+		redirect '/ads/list'
+	end
+   end
+end
+
 ########### ROUTES ###############
 
 # Index
@@ -20,16 +36,34 @@ get '/' do
   erb(:index, :layout => true, :locals => {:categories => categories})
 end
 
-# List all users
-get '/users/list' do
-  users = DB["SELECT * FROM Users ORDER BY creation_date DESC"]
-  erb(:users, :layout => true, :locals => {:users => users})
-end
+############ ADS #################
 
 # List all ads
 get '/ads/list' do
   ads = DB["SELECT * FROM Ads ORDER BY creation_date DESC"]
-  erb(:ads, :layout => true, :locals => {:tag => nil, :ads => ads})
+  erb(:ads, :layout => true, :locals => {:mode => :list, :ads => ads})
+end
+
+# Category listings
+get '/tag/:cat' do |cat|
+   ads = DB["SELECT * FROM Ads WHERE category = ? ORDER BY creation_date DESC",cat]
+   if ads.empty?
+   	session["error"] = "We don't have a #{cat} category."
+        redirect '/ads/list'
+   end
+   erb(:ads, :layout => true, :locals => {:mode => :category, :title => cat, :ads => ads})
+end
+
+# Search for an ad
+get '/ads/search' do
+   query = params['query']
+   category = params['category']
+   ads = DB["SELECT * FROM Ads WHERE category = ? AND (title LIKE ? OR description LIKE ?)",category,"%#{query}%","%#{query}%"]
+   if ads.empty?
+   	session["error"] = "We couldn't find anything matching '#{query}' under #{category}."
+        redirect '/'
+   end
+   erb(:ads, :layout => true, :locals => {:mode => :search, :query => query, :ads => ads})
 end
 
 # Show new ad form
@@ -63,15 +97,54 @@ post '/new_ad' do
    end	
 end
 
-# Category listings
-get '/tag/:cat' do |cat|
-   ads = DB["SELECT * FROM Ads WHERE category = ? ORDER BY creation_date DESC",cat]
-   if ads.empty?
-   	session["error"] = "We don't have a #{cat} category."
-        redirect '/ads/list'
+# Show an ad
+get '/ads/show/:id' do |id|
+   ad = DB["SELECT * FROM Ads A, Users U WHERE A.id = ? AND U.username = A.fk_username",id]
+   if ad.empty?
+	session["error"] = "Couldn't find the ad you were looking for."
+	redirect '/ads/list'
    end
-   erb(:ads, :layout => true, :locals => {:tag => cat.capitalize, :ads => ads})
+   erb(:show_ad, :layout => true, :locals => {:ad => ad})
 end
+
+# Delete an ad
+get '/ads/delete/:id' do |id|
+   check_allowed(id) 
+   DB["DELETE FROM Ads WHERE id = ?", id].delete
+   session["success"] = "Deleted ad number #{id}"
+   redirect "/ads/#{session["username"]}/list"
+end
+
+# Show the edit ad form
+get '/ads/edit/:id' do |id|
+   check_allowed(id) 
+   ad = DB["SELECT * FROM Ads WHERE id = ?",id]
+   if ad.empty?
+	   session["error"] = "We don't have an ad with an id of #{id}"
+	   redirect "/ads/#{session["username"]}/list"
+   end
+   erb(:edit_ad, :layout => true, :locals => {:ad => ad})
+end
+
+# Edit an ad
+post '/edit_ad/:id' do |id|
+   check_allowed(id)
+   
+   title = params['title']
+   description = params['description']
+   category = params['category']
+   
+   if title.length == 0 or description.length == 0 or category.length == 0
+        session["error"] = "Please enter a title, description and category."
+	redirect "/ads/edit/#{id}"
+   end
+
+   DB["UPDATE Ads SET title = ?, description = ?, category = ? WHERE id = ?",title, description,category,id].update
+   session["success"] = "Updated ad number #{id}!"
+   redirect "/ads/#{session["username"]}/list"
+end
+
+################## USERS ##########################
 
 # Log in
 post '/login' do
@@ -86,7 +159,7 @@ post '/login' do
 
    session["username"] = username
    session["info"] = "Welcome back #{username}!"
-   redirect "/ads/#{username}/list"
+   redirect "/"
 end
 
 # Log out
@@ -95,6 +168,12 @@ get '/logout' do
    session["username"] = nil
    session["info"] = "Goodbye #{username}!"
    redirect '/'
+end
+
+# List all users
+get '/users/list' do
+  users = DB["SELECT * FROM Users ORDER BY creation_date DESC"]
+  erb(:users, :layout => true, :locals => {:users => users})
 end
 
 # Show new user form
@@ -128,5 +207,6 @@ end
 # List all ads belonging to a user
 get '/ads/:username/list' do |username|
    ads = DB["SELECT * FROM Ads WHERE fk_username = ?",username]
-   erb(:ads, :layout => true, :locals => {:tag => "#{username}'s Ads", :ads => ads})
+   redirect '/ads/list' if ads.empty?
+   erb(:ads, :layout => true, :locals => {:mode => :user, :username => username, :ads => ads})
 end

@@ -11,7 +11,17 @@
 </head>
 <body>
 
-<h1>[<% if tag %><%= tag.capitalize %><% else %>Ads<% end %>]</h1>
+<h1>[
+<% case(mode) when :category %>
+		<%= title.capitalize %>
+	<% when :list %>
+		Ads
+	<% when :search %>
+		Results for "<%= query %>"
+	<% when :user %>
+		<%= username %>'s Ads
+	<% end %>	
+]</h1>
 <%= erb :_loggedin %>
 <%= erb :_flash %>
 <hr/>
@@ -19,12 +29,14 @@
 <table class="striped_table" summary="List of Ads">
     <thead>
     	<tr>
-        	<th scope="col">ID</th>
             <th scope="col">Title</th>
-            <th scope="col">Description</th>
             <th scope="col">Category</th>
             <th scope="col">Creation Date</th>
-            <th scope="col">Posted by</th>
+            <% if mode == :user and username == session["username"] %>
+					<th scope="col">Action</th>
+   			<% else %>
+					<th scope="col">Posted by</th>   				
+   			<% end %>          
         </tr>
     </thead>
     <tbody>
@@ -35,12 +47,14 @@
         		<% else %>
         			<tr class="odd">
         		<% end %>
-        				<td><%= row[:id] %></td>
-        				<td><%= row[:title] %></td>
-            		<td><%= row[:description][0..15] + "..." %></td>
-            		<td><%= row[:category] %></td>
+        				<td><a href="/ads/show/<%= row[:id] %>"><%= row[:title] %></a></td>
+            		<td><a href="/tag/<%= row[:category] %>"><%= row[:category] %></a></td>
             		<td><%= row[:creation_date] %></td>
-            		<td><%= row[:fk_username] %></td>
+            		<% if mode == :user and username == session["username"] %>
+							<td><a href="/ads/edit/<%= row[:id] %>">[Edit]</a> <a href="/ads/delete/<%= row[:id] %>">[Delete]</a></td>            			
+            		<% else %>
+            		   <td><a href="/ads/<%= row[:fk_username]%>/list"><%= row[:fk_username] %></a></td>
+            		<% end %>
         		</tr>
         	<% i += 1 %>
         	<% end %>

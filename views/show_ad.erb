@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<% ad = ad.first %>
+<title><%= ad[:title] %></title>
+<style type="text/css">
+<!--
+@import url("/css/style.css");
+-->
+</style>
+</head>
+<body>
+
+<p><h1><%= ad[:title] %></h1></p>
+<%= erb :_loggedin %>
+<%= erb :_flash %>
+<hr>
+<div class="left">
+<p> ID: <%= ad[:id] %> </p>
+<p> Category: <%= ad[:category] %> </p>
+<p> Date: <%= ad[:creation_date] %> </p>
+<p> Posted by: <%= ad[:fk_username] %> </p>
+<p> Contact email: <a href="mailto:<%= ad[:email] %>" ><%= ad[:email] %> </a></p>
+</div>
+<hr/>
+<p><%= ad[:description] %></p> 
+</body>
+</html>
