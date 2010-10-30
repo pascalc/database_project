@@ -11,6 +11,7 @@ enable :sessions
 # Set up the database connection
 
 DB = Sequel.mysql('dbproject',:host => "localhost", :user => "pascal", :password => "dbproject")
+@categories = DB["SELECT DISTINCT category FROM Ads"]
 
 ########### ROUTES ###############
 

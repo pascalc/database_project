@@ -36,7 +36,6 @@
 </div>
 <div id="center">
 <h2>Welcome to Rainbow pages</h2>
-<%= erb :_flash %>
 <p>Lorem ipsum dolor sit amet</p>
 </div>
 <div id="right">
