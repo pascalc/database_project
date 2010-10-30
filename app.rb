@@ -17,7 +17,7 @@ DB = Sequel.mysql('dbproject',:host => "localhost", :user => "pascal", :password
 # Index
 get '/' do
   categories = DB["SELECT DISTINCT category FROM Ads"]
-  erb(:index, :layout => false, :locals => {:categories => categories})
+  erb(:index, :layout => true, :locals => {:categories => categories})
 end
 
 # List all users
@@ -67,10 +67,34 @@ end
 get '/tag/:cat' do |cat|
    ads = DB["SELECT * FROM Ads WHERE category = ? ORDER BY creation_date DESC",cat]
    if ads.empty?
-   	session["error"] = "We don't have a #{tag} category."
+   	session["error"] = "We don't have a #{cat} category."
         redirect '/ads/list'
    end
-   erb(:ads, :layout => true, :locals => {:tag => cat, :ads => ads})
+   erb(:ads, :layout => true, :locals => {:tag => cat.capitalize, :ads => ads})
+end
+
+# Log in
+post '/login' do
+   username = params['username']
+   password = params['password']
+   
+   result = DB["SELECT username,password FROM Users WHERE username = ? AND password = ?",username,password]
+   if result.empty?
+      session["error"] = "Log in failed, please try again."
+      redirect '/'
+   end
+
+   session["username"] = username
+   session["info"] = "Welcome back #{username}!"
+   redirect "/ads/#{username}/list"
+end
+
+# Log out
+get '/logout' do
+   username = session["username"]
+   session["username"] = nil
+   session["info"] = "Goodbye #{username}!"
+   redirect '/'
 end
 
 # Show new user form
@@ -101,26 +125,8 @@ post '/new_user' do
    redirect '/users/list'
 end
 
-# Log in
-post '/login' do
-   username = params['username']
-   password = params['password']
-   
-   result = DB["SELECT username,password FROM Users WHERE username = ? AND password = ?",username,password]
-   if result.empty?
-      session["error"] = "Log in failed, please try again."
-      redirect '/'
-   end
-
-   session["username"] = username
-   session["info"] = "Welcome back #{username}!"
-   redirect '/ads/list'
-end
-
-# Log out
-get '/logout' do
-   username = session["username"]
-   session["username"] = nil
-   session["info"] = "Goodbye #{username}!"
-   redirect '/'
+# List all ads belonging to a user
+get '/ads/:username/list' do |username|
+   ads = DB["SELECT * FROM Ads WHERE fk_username = ?",username]
+   erb(:ads, :layout => true, :locals => {:tag => "#{username}'s Ads", :ads => ads})
 end
