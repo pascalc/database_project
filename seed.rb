@@ -11,7 +11,7 @@ NUM_ADS = 500
 
 # Connect to the database
 
-DB = Sequel.mysql('dbproject',:host => "localhost", :user => "pascal", :password => "dbproject")
+DB = Sequel.mysql('dbproject',:host => "localhost", :user => "dbproject", :password => "dbproject")
 
 # Clear existing data
 
