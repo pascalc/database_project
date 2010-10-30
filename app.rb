@@ -10,7 +10,7 @@ enable :sessions
 
 # Set up the database connection
 
-DB = Sequel.mysql('dbproject',:host => "localhost", :user => "pascal", :password => "dbproject")
+DB = Sequel.mysql('dbproject',:host => "localhost", :user => "dbproject")
 
 # Helper functions
 
@@ -36,7 +36,7 @@ get '/' do
   erb(:index, :layout => true, :locals => {:categories => categories})
 end
 
-############ ADS #################
+############ ADS ###########
 
 # List all ads
 get '/ads/list' do
@@ -58,7 +58,7 @@ end
 get '/ads/search' do
    query = params['query']
    category = params['category']
-   ads = DB["SELECT * FROM Ads WHERE category = ? AND (title LIKE ? OR description LIKE ?)",category,"%#{query}%","%#{query}%"]
+   ads = DB["SELECT * FROM Ads WHERE category = ? AND (title LIKE ? OR description LIKE ? OR fk_username LIKE ?)",category,"%#{query}%","%#{query}%","%#{query}%"]
    if ads.empty?
    	session["error"] = "We couldn't find anything matching '#{query}' under #{category}."
         redirect '/'
