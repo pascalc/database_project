@@ -14,7 +14,6 @@
 <h1>[Users]</h1>
 <%= erb :_loggedin %>
 <%= erb :_flash %>
-<div class="message"><p><% if session["message"] %><%= session["message"] %><% session["message"] = nil; end %></p></div>
 <hr/>
 <table class="striped_table" summary="List of Users">
     <thead>
@@ -27,7 +26,7 @@
     </thead>
     <tbody>
         <% i = 0 %>
-		  <% @users.each do |row| %>
+		  <% users.each do |row| %>
 		  		<% if i % 2 == 1 %>
         			<tr>
         		<% else %>

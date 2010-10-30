@@ -13,7 +13,7 @@
 
 <h1>[Users]</h1>
 <%= erb :_loggedin %>
-<div class="message"><p><% if session["message"] %><%= session["message"] %><% session["message"] = nil; end %></p></div>
+<%= erb :_flash %>
 <hr/>
 <table class="striped_table" summary="List of Users">
     <thead>

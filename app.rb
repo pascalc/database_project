@@ -11,26 +11,25 @@ enable :sessions
 # Set up the database connection
 
 DB = Sequel.mysql('dbproject',:host => "localhost", :user => "pascal", :password => "dbproject")
-@categories = DB["SELECT DISTINCT category FROM Ads"]
 
 ########### ROUTES ###############
 
 # Index
 get '/' do
-  erb :index
+  categories = DB["SELECT DISTINCT category FROM Ads"]
+  erb(:index, :layout => false, :locals => {:categories => categories})
 end
 
 # List all users
 get '/users/list' do
-  @users = DB["SELECT * FROM Users ORDER BY creation_date DESC"]
-  erb :users
+  users = DB["SELECT * FROM Users ORDER BY creation_date DESC"]
+  erb(:users, :layout => true, :locals => {:users => users})
 end
 
 # List all ads
 get '/ads/list' do
-  @tag = nil	
-  @ads = DB["SELECT * FROM Ads ORDER BY creation_date DESC"]
-  erb :ads
+  ads = DB["SELECT * FROM Ads ORDER BY creation_date DESC"]
+  erb(:ads, :layout => true, :locals => {:tag => nil, :ads => ads})
 end
 
 # Show new ad form
@@ -66,13 +65,12 @@ end
 
 # Category listings
 get '/tag/:cat' do |cat|
-   @tag = cat
-   @ads = DB["SELECT * FROM Ads WHERE category = ? ORDER BY creation_date DESC",@tag]
-   if @ads.empty?
-   	session["error"] = "We don't have a #{@tag} category."
+   ads = DB["SELECT * FROM Ads WHERE category = ? ORDER BY creation_date DESC",cat]
+   if ads.empty?
+   	session["error"] = "We don't have a #{tag} category."
         redirect '/ads/list'
-   end	
-   erb :ads 
+   end
+   erb(:ads, :layout => true, :locals => {:tag => cat, :ads => ads})
 end
 
 # Show new user form
