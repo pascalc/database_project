@@ -1,0 +1,4 @@
+<% @categories.each do |row| %>
+	<% r = row[:category] %>
+	<option value="<%= r %>"><%= r.capitalize %></option>
+<% end %>
