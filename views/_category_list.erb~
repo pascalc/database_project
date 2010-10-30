@@ -1,8 +1,0 @@
-<% categories.each do |row| %>
-	<% r = row[:category] %>
-	<% if value == 0 %>	<!-- # If value equals 0 then generate dropdown box -->
-		<option value="<%= r %>"><%= r.capitalize %></option>
-	<% else %>		<!-- # Else generate a list with links to each category -->
-		<li><a href="/tag/<%= r %>" title="<%= r %>"><%= r.capitalize %></a></li>
-	<% end %>
-<% end %>
