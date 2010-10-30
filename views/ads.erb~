@@ -11,7 +11,9 @@
 </head>
 <body>
 
-<h1>List of Ads</h1>
+<h1>[<% if @tag %><%= @tag.capitalize %><% else %>Ads<% end %>]</h1>
+<%= erb :_loggedin %>
+<div class="message"><p><% if session["message"] %><%= session["message"] %><% session["message"] = nil; end %></p></div>
 <hr/>
 
 <table class="striped_table" summary="List of Ads">
@@ -28,7 +30,7 @@
     <tbody>
         <% i = 0 %>
 		  <% @ads.each do |row| %>
-		  		<% if i % 2 == 0 %>
+		  		<% if i % 2 == 1 %>
         			<tr>
         		<% else %>
         			<tr class="odd">

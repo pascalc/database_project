@@ -1,0 +1,4 @@
+<% if session["info"] %><div class="info"><p><%= session["info"] %></p></div><% session["info"] = nil; end %>
+<% if session["success"] %><div class="success"><p><%= session["success"] %></p></div><% session["success"] = nil; end %>
+<% if session["warning"] %><div class="warning"><p><%= session["warning"] %></div></p><% session["warning"] = nil; end %>
+<% if session["error"] %><div class="error"><p><%= session["error"] %></div></p><% session["error"] = nil; end %>

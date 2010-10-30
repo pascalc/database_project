@@ -11,9 +11,11 @@
 </head>
 <body>
 
-<h1>List of Users</h1>
+<h1>[Users]</h1>
+<%= erb :_loggedin %>
+<%= erb :_flash %>
+<div class="message"><p><% if session["message"] %><%= session["message"] %><% session["message"] = nil; end %></p></div>
 <hr/>
-Logged in as: <%= session["username"] %>
 <table class="striped_table" summary="List of Users">
     <thead>
     	<tr>
@@ -26,7 +28,7 @@ Logged in as: <%= session["username"] %>
     <tbody>
         <% i = 0 %>
 		  <% @users.each do |row| %>
-		  		<% if i % 2 == 0 %>
+		  		<% if i % 2 == 1 %>
         			<tr>
         		<% else %>
         			<tr class="odd">

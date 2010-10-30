@@ -13,7 +13,7 @@
 
 <p><h1><center>Maybe some general bullshit text </center></h1></p>
 <%= erb :_loggedin %>
-<%= erb :_flash %>
+
 <hr><br/>
 <form name="new_ad" action="/new_ad" method="post">
 Title *<br/>

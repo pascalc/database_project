@@ -5,7 +5,7 @@
 <title>Rainbow pages - online just for you!</title>
 <style type="text/css">
 <!--
-@import url("css/style.css");
+@import url("/css/style.css");
 -->
 </style>
 </head>
@@ -33,6 +33,26 @@
 </div>
 <div id="footer"><p>© Rainbow pages</p></div>
 
+<<<<<<< HEAD:public/new_user.html
 </div>
+=======
+<p><h1><center>Create New User</center></h1></p> 
+<%= erb :_flash %>
+<hr><br/>
+
+<form name="new_user" action="/new_user" method="post">
+Username *<br/>
+<input type="text" name="username" id="username" value=""/><br />
+Password *<br/>
+<input type="password" name="password" id="password" value=""/><br />
+Email *<br/>
+<input type="text" name="email" id="email" value=""/><br /> 
+<br/> <input type="submit" value="Submit" />
+
+<br/><br/><hr>
+<p><h2>Maybe some other bullshit here</h2></p>
+</form>
+
+>>>>>>> ad36597e7515979ff79e35866a6813fb381a3c8b:views/new_user.erb~
 </body>
 </html>

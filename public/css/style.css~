@@ -1,3 +1,30 @@
+/* Styling for the logged in and flash messages */
+div.loggedin
+{
+	font-style: italic;
+}
+div.info, div.success, div.warning, div.error,{
+border: 1px solid;
+margin: 10px 5px;
+padding:15px 10px 15px 50px;
+}
+div.info {
+color: #00529B;
+background-color: #BDE5F8;
+}
+div.success {
+color: #4F8A10;
+background-color: #DFF2BF;
+}
+div.warning {
+color: #9F6000;
+background-color: #FEEFB3;
+}
+div.error {
+color: #D8000C;
+background-color: #FFBABA;
+}
+
 /* ------------------
  styling for the tables 
    ------------------   */
@@ -64,9 +91,8 @@ body {
 	padding: 0px;
 	margin: 10px 0px 0px 0px;
 	background-attachment: scroll;
-	/*background-image: url(back.gif);*/
-	background-color:#f1f1f1;
-	/*background-repeat: repeat-y;*/
+	background-image: url(../images/back.gif);
+	background-repeat: repeat-y;
 	background-position: 0px 0px;
 	height: 1%;
 	width: auto;
