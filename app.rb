@@ -16,7 +16,7 @@ DB = Sequel.mysql('dbproject',:host => "localhost", :user => "pascal", :password
 
 # Index
 get '/' do
-   redirect '/index.html'
+  erb :index
 end
 
 # List all users
