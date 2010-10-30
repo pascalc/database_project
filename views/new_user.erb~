@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Rainbow pages - online just for you!</title>
+<title>Create new user</title>
 <style type="text/css">
 <!--
 @import url("/css/style.css");
@@ -10,32 +10,7 @@
 </style>
 </head>
 <body>
-<div id="wrapper">
-<div id="header"><h1><center>Rainbow pages</center></h1></div>
-<div id="container">
-<div id="left">
-	<form name="new_user" action="/new_user" method="post" class="layout">
-	Username *
-	<input type="text" name="username" id="username" value="" class="layout" style="width:150px"/>
-	Password *
-	<input type="password" name="password" id="password" value="" class="layout" style="width:150px"/>
-	Email *
-	<input type="text" name="email" id="email" value="" class="layout" style="width:150px"/><br /> 
-	<input type="submit" value="Submit" />
-	</form>
-</div>
-<div id="center">
-<h2>Create new user</h2>
-<p>Wtf?!</p>
-</div>
-<div id="right"></div>
-<div class="clearer"> </div>
-</div>
-<div id="footer"><p>© Rainbow pages</p></div>
 
-<<<<<<< HEAD:public/new_user.html
-</div>
-=======
 <p><h1><center>Create New User</center></h1></p> 
 <%= erb :_flash %>
 <hr><br/>
@@ -53,6 +28,5 @@ Email *<br/>
 <p><h2>Maybe some other bullshit here</h2></p>
 </form>
 
->>>>>>> ad36597e7515979ff79e35866a6813fb381a3c8b:views/new_user.erb~
 </body>
 </html>
