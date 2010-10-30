@@ -5,7 +5,7 @@
 <title>Rainbow pages - online just for you!</title>
 <style type="text/css">
 <!--
-@import url("css/style.css");
+@import url("/css/style.css");
 -->
 </style>
 </head>
@@ -26,7 +26,7 @@
 	Category: <select name="category" style="width:150px">
 	<!-- Ruby code that automatically generates all the categories 
 	in the database -->
-	<%= erb(:_category_list, :layout => false, :locals => {:value => 0}) %>	
+	<%= erb(:_category_list, :layout => false, :locals => {:categories => categories,:value => 0}) %>	
 	<!-- <option value="jobs">Jobs</option>
 	<option value="housing">Housing</option>
 	<option value="electronics">Electronics</option>
@@ -44,14 +44,7 @@
 <ul id="nav">
 <!-- Ruby code that automatically generates all the categories 
 in the database -->
-	<%= erb(:_category_list, :layout => false, :locals => {:value => 1}) %>	
-<li><a href="#" title="home">Books</a></li>
-<li><a href="#" title="about us">Electronics</a></li>
-<li><a href="#" title="services">Services</a></li>
-<li><a href="#" title="portfolio">Jobs</a></li>
-<li><a href="#" title="testimonials">Housin</a></li>
-<li><a href="#" title="contact us">Personal</a></li>
-<li><a href="#" title="contact us">Personal</a></li>
+	<%= erb(:_category_list, :layout => false, :locals => {:categories => categories,:value => 1}) %>	
 </ul></div>
 <div class="clearer"> </div>
 </div>
