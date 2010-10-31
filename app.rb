@@ -158,8 +158,17 @@ post '/login' do
       redirect '/'
    end
 
-   session["username"] = username
+   redirect '/users/dashboard'
+end
+
+# User's dashboard
+get '/users/dashboard' do
+   if not session["username"]
+	   session["warning"] = "Please log in first."
+	   redirect '/'
+   end
    
+   username = session["username"]
    categories = DB["SELECT DISTINCT category FROM Ads"]
    
    num_ads_query = DB["SELECT COUNT(*) AS number FROM Ads WHERE fk_username = ?", username] 
@@ -220,7 +229,7 @@ post '/new_user' do
 
    session["username"] = username
    session["info"] = "Welcome, #{username}!"
-   redirect '/users/list'
+   redirect '/users/dashboard'
 end
 
 # List all ads belonging to a user
