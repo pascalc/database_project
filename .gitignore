@@ -1,2 +1,4 @@
 *.swp
 *~
+views/*.swp
+views/*~

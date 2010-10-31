@@ -1,0 +1,24 @@
+<% if session["username"] %>    <!-- If a user is logged in -->
+       <a href="/users/dashboard">Back to main page</a>
+       <!-- Add an ad -->
+       <form name="new_ad" action="/ads/new" method="get" class="layout">
+       <input type="submit" value="Create new ad" /> </form>
+       <!-- Show users ads -->
+       <form name="show_ads" action="/ads/<%= session['username'] %>/list " method="get" class="layout">
+       <input type="submit" value="Show my ads" /> </form>
+<% else %>
+       <form name="login" action="/login" method="post" class="layout">
+       Username: <input type="text" name="username" id="username" value="" style="width:150px"/><br />
+       Password: <input type="password" name="password" id="password" value="" style="width:150px"/><br />
+       <input type="submit" value="Login" />
+       </form>
+<% end %>
+       <form name="search" action="/ads/search" method="get" class="layout">
+       Search <input type="text" name="query" id="search" value="" style="width:150px"/><br />
+       Category <select name="category" style="width:150px">
+       <!-- Ruby code that automatically generates all the categories
+       in the database -->
+       <%= erb(:_category_list, :layout => false, :locals => {:mode => dropdown}) %>
+       </select>
+       <input type="submit" value="Search" />
+       </form>
