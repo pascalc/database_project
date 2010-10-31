@@ -13,6 +13,9 @@ enable :sessions
 
 DB = Sequel.mysql('dbproject',:host => "localhost", :user => "dbproject")
 
+# Global variables
+$categories = DB["SELECT DISTINCT category FROM Ads"]
+
 # Helper functions
 
 # Check if the logged in user is allowed to alter this ad 
@@ -33,8 +36,7 @@ end
 
 # Index
 get '/' do
-  categories = DB["SELECT DISTINCT category FROM Ads"]
-  erb(:index, :layout => true, :locals => {:categories => categories})
+  erb :index
 end
 
 ############ ADS ###########
@@ -158,6 +160,8 @@ post '/login' do
       redirect '/'
    end
 
+   session["username"] = username
+   
    redirect '/users/dashboard'
 end
 
@@ -167,10 +171,8 @@ get '/users/dashboard' do
 	   session["warning"] = "Please log in first."
 	   redirect '/'
    end
-   
    username = session["username"]
-   categories = DB["SELECT DISTINCT category FROM Ads"]
-   
+      
    num_ads_query = DB["SELECT COUNT(*) AS number FROM Ads WHERE fk_username = ?", username] 
    if num_ads_query.empty?
 	   nr_ads = 0
@@ -187,7 +189,7 @@ get '/users/dashboard' do
    end
    alive = ((Time.now - creation_date)/(60*60*24)).round   
 
-   erb(:user_page, :layout => true, :locals => {:categories => categories, :nr_ads => nr_ads, :alive => alive})
+   erb(:user_page, :layout => true, :locals => {:nr_ads => nr_ads, :alive => alive})
 end
 
 # Log out

@@ -1,4 +1,4 @@
-<% categories.each do |row| %>
+<% $categories.each do |row| %>
 	<% r = row[:category] %>
 	<% if value == 0 %>	<!-- # If value equals 0 then generate dropdown box -->
 		<option value="<%= r %>"><%= r.capitalize %></option>

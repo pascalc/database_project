@@ -18,8 +18,10 @@
 <form name="new_ad" action="/new_ad" method="post">
 Title *<br/>
 <input type="text" name="title" id="title" value=""/><br />
-Category *<br/>
-<input type="text" name="category" id="category" value=""/><br />
+Category: <select name="category" style="width:150px">
+	<!-- Ruby code that automatically generates all the categories 
+	in the database -->
+	<%= erb(:_category_list, :layout => false, :locals => {:value => 0}) %> </select>
 Description *<br/>
 <textarea rows="10" cols="100" type="text" name="description" value="">Enter the description of your ad here.</textarea> 
 <br/> <input type="submit" value="Submit" />
