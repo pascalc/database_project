@@ -18,7 +18,7 @@
        Category <select name="category" style="width:150px">
        <!-- Ruby code that automatically generates all the categories
        in the database -->
-       <%= erb(:_category_list, :layout => false, :locals => {:mode => dropdown}) %>
+       <%= erb(:_category_list, :layout => false, :locals => {:mode => :dropdown}) %>
        </select>
        <input type="submit" value="Search" />
        </form>
