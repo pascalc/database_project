@@ -1,4 +1,8 @@
-/* Styling for the logged in and flash messages */
+/* ----------------
+ Styling for the logged
+ in and flash messages 
+ ------------------- */
+
 div.loggedin
 {
 	font-style: italic;
@@ -42,8 +46,11 @@ body
 
 .striped_table
 {
-	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
-	font-size: 14px;
+	/*font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 14px;*/
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #333;
 	margin: 20px;
 	width: 95%;
 	text-align: center;
@@ -52,9 +59,11 @@ body
 th
 {
 	font-size: 14px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
 	font-weight: normal;
 	padding: 10px 8px;
-	color: #039;
+	/*color: #039;*/
 }
 td
 {
@@ -63,7 +72,7 @@ td
 }
 .odd
 {
-	background: #e8edff; 
+	background: #f1f1f1;
 }
 
 /* ----------
@@ -71,7 +80,7 @@ td
  ----------- */
 body {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
+	font-size: 12px;
 	color: #333;
 	text-align: center;
 	margin: 0px;

@@ -1,14 +1,18 @@
 <table class="striped_table">
 	<thead><tr>
-		<td>User alive</td>
+		<td>Registered for</td>
 		<td>Number of ads</td>
 	</tr>
 	</thead>
 	<tbody>
 	<tr>
-		<td> <%= alive %> </td>
-		<td> <%= nr_ads %> </td>
+<<<<<<< Updated upstream:views/_user_info.erb
+		<td> <%= alive %> days </td>
+		<td> <%= nr_ads %> ads </td>
+=======
+		<td> <%= alive %> days</td>
+		<td> <%= nr_ads %> ads</td>
+>>>>>>> Stashed changes:views/_user_info.erb
 	</tr>
 	</tbody>
 </table>
-
