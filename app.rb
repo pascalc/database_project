@@ -159,21 +159,25 @@ post '/login' do
    end
 
    session["username"] = username
-   #redirect "/"
-   # Added 31/10 to try make user page work
+   
    categories = DB["SELECT DISTINCT category FROM Ads"]
-   nr_ads = nil
-   nr_ads = DB["SELECT COUNT(*) AS number FROM Ads WHERE fk_username = ?", username].each do |row|
-	nr_ads = row[:number]
+   
+   num_ads_query = DB["SELECT COUNT(*) AS number FROM Ads WHERE fk_username = ?", username] 
+   if num_ads_query.empty?
+	   nr_ads = 0
+   else
+	   nr_ads = nil
+   	   num_ads_query.each do |row|
+		nr_ads = row[:number]
+   	   end
    end
+
    creation_date = nil
    DB["SELECT creation_date from Users WHERE username = ?", username].each do |row|
 	creation_date = row[:creation_date]
    end
-   #creation_date = Date.parse(creation_date)
-   today = Date.today
-   alive = (today - creation_date)
-   alive = alive.to_i	# Number of days since user created
+   alive = ((Time.now - creation_date)/(60*60*24)).round   
+
    erb(:user_page, :layout => true, :locals => {:categories => categories, :nr_ads => nr_ads, :alive => alive})
 end
 

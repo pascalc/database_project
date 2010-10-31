@@ -1,0 +1,14 @@
+<table class="striped_table">
+	<thead><tr>
+		<td>User alive</td>
+		<td>Number of ads</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td> <%= alive %> </td>
+		<td> <%= nr_ads %> </td>
+	</tr>
+	</tbody>
+</table>
+

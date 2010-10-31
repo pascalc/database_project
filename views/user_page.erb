@@ -37,7 +37,7 @@
 <h2><%= erb :_loggedin %></h2>
 <%= erb :_flash %>
 <!-- Puts out time since user created and nr of ads the user posted -->
-<%= erb(:_user_info, :layout => false, :locals => {:alived = alive, :nr_ads => nr_ads}) %>
+<%= erb(:_user_info, :layout => false, :locals => {:alive => alive, :nr_ads => nr_ads}) %>
 </div>
 <div id="right">
 <ul id="nav">
