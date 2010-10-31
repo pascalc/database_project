@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Top 10 Express Table Designs - Smashing Magazine Source</title>
+<title>[ADSPACE]</title>
 <style type="text/css">
 <!--
 @import url("/css/style.css");
@@ -10,26 +10,36 @@
 </style>
 </head>
 <body>
+<div id="wrapper">
+<div id="header"><h1><center>[ADSPACE]</center></h1>
+<% if session["username"] %><div class="logout"><a href="/logout">Logout</a> </div><% end %>
+</div>
+<div id="container">
+<div id="left">
+<%= erb :_left_navbar %>
+</div>
+<div id="center">
 
-<p><h1><center>Maybe some general bullshit text </center></h1></p>
-<%= erb :_loggedin %>
-<%= erb :_flash %>
-<%= erb :_navbar %>
-<hr><br/>
 <form name="new_ad" action="/new_ad" method="post">
 Title *<br/>
-<input type="text" name="title" id="title" value=""/><br />
-Category: <select name="category" style="width:150px">
+<input type="text" name="title" id="title" value="" class="layout"/><br />
+<select name="category" style="width:150px" class="layout">
 	<!-- Ruby code that automatically generates all the categories 
 	in the database -->
 	<%= erb(:_category_list, :layout => false, :locals => {:mode => :dropdown}) %> </select>
-Description *<br/>
-<textarea rows="10" cols="100" type="text" name="description" value="">Enter the description of your ad here.</textarea> 
-<br/> <input type="submit" value="Submit" />
-
-<br/><br/><hr>
-<p><h2>Maybe some other bullshit here</h2></p>
-</form>
-
+<br>Description *<br/>
+<textarea rows="10" cols="100" type="text" name="description" value="" style="width:100%">Enter the description of your ad here.</textarea> 
+<br/> <input type="submit" value="Submit" /></form>
+</div>
+<div id="right">
+<ul id="nav">
+<!-- Ruby code that automatically generates all the categories 
+in the database -->
+	<%= erb(:_category_list, :layout => false, :locals => {:mode => :list}) %>	
+</ul></div>
+<div class="clearer"> </div>
+</div>
+<div id="footer"><p>© ADSPACE 2010</p></div>
+</div>
 </body>
 </html>
