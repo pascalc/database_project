@@ -19,8 +19,6 @@
   We configured Sinatra to use the WEBrick web server and the ERB server page
   language. We did not use the Zone.
 
-  <section|ER Diagram>
-
   <section|Relational Schema>
 
   <\code>
@@ -118,10 +116,6 @@
 
   <verbatim|num_ads_query = DB["SELECT COUNT(*) AS number FROM Ads WHERE
   fk_username = ?", username]>
-
-  <new-page>
-
-  <section|Screenshots>
 </body>
 
 <\initial>
@@ -135,17 +129,19 @@
 <\references>
   <\collection>
     <associate|auto-1|<tuple|1|1>>
-    <associate|auto-10|<tuple|4.6|2>>
+    <associate|auto-10|<tuple|3.7|2>>
     <associate|auto-11|<tuple|4.7|2>>
-    <associate|auto-12|<tuple|5|2>>
+    <associate|auto-12|<tuple|5|3>>
+    <associate|auto-13|<tuple|5.1|?>>
+    <associate|auto-14|<tuple|1|?>>
     <associate|auto-2|<tuple|2|1>>
     <associate|auto-3|<tuple|3|1>>
-    <associate|auto-4|<tuple|4|2>>
-    <associate|auto-5|<tuple|4.1|2>>
-    <associate|auto-6|<tuple|4.2|2>>
-    <associate|auto-7|<tuple|4.3|2>>
-    <associate|auto-8|<tuple|4.4|2>>
-    <associate|auto-9|<tuple|4.5|2>>
+    <associate|auto-4|<tuple|3.1|2>>
+    <associate|auto-5|<tuple|3.2|2>>
+    <associate|auto-6|<tuple|3.3|2>>
+    <associate|auto-7|<tuple|3.4|2>>
+    <associate|auto-8|<tuple|3.5|2>>
+    <associate|auto-9|<tuple|3.6|2>>
   </collection>
 </references>
 
