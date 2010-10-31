@@ -14,6 +14,7 @@
 <p><h1><center>Maybe some general bullshit text </center></h1></p>
 <%= erb :_loggedin %>
 <%= erb :_flash %>
+<%= erb :_navbar %>
 <hr><br/>
 <form name="new_ad" action="/new_ad" method="post">
 Title *<br/>
@@ -21,7 +22,7 @@ Title *<br/>
 Category: <select name="category" style="width:150px">
 	<!-- Ruby code that automatically generates all the categories 
 	in the database -->
-	<%= erb(:_category_list, :layout => false, :locals => {:value => 0}) %> </select>
+	<%= erb(:_category_list, :layout => false, :locals => {:mode => :dropdown}) %> </select>
 Description *<br/>
 <textarea rows="10" cols="100" type="text" name="description" value="">Enter the description of your ad here.</textarea> 
 <br/> <input type="submit" value="Submit" />

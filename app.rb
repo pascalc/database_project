@@ -14,7 +14,7 @@ enable :sessions
 DB = Sequel.mysql('dbproject',:host => "localhost", :user => "dbproject")
 
 # Global variables
-$categories = DB["SELECT DISTINCT category FROM Ads"]
+$categories = DB["SELECT name FROM Categories"]
 
 # Helper functions
 
@@ -49,7 +49,7 @@ end
 
 # Category listings
 get '/tag/:cat' do |cat|
-   ads = DB["SELECT * FROM Ads WHERE category = ? ORDER BY creation_date DESC",cat]
+   ads = DB["SELECT * FROM Ads WHERE fk_category = ? ORDER BY creation_date DESC",cat]
    if ads.empty?
    	session["error"] = "We don't have a #{cat} category."
         redirect '/ads/list'
@@ -61,7 +61,7 @@ end
 get '/ads/search' do
    query = params['query']
    category = params['category']
-   ads = DB["SELECT * FROM Ads WHERE category = ? AND (title LIKE ? OR description LIKE ? OR fk_username LIKE ?)",category,"%#{query}%","%#{query}%","%#{query}%"]
+   ads = DB["SELECT * FROM Ads WHERE fk_category = ? AND (title LIKE ? OR description LIKE ? OR fk_username LIKE ?)",category,"%#{query}%","%#{query}%","%#{query}%"]
    if ads.empty?
    	session["error"] = "We couldn't find anything matching '#{query}' under #{category}."
         redirect '/'
@@ -90,10 +90,10 @@ post '/new_ad' do
    end
 
    begin 
-   	DB["INSERT INTO Ads (id, title, description, category, creation_date, fk_username)
+   	DB["INSERT INTO Ads (id, title, description, fk_category, creation_date, fk_username)
                 VALUES (null, ?, ?, ?, null, ?)", title, description, category,session["username"]].insert
    	session["success"] = "Created a new ad!"
-   	redirect '/ads/list'
+   	redirect "/ads/#{session["username"]}/list"
    rescue
 	session["error"] = "Something went wrong..."
      	redirect '/ads/new'
@@ -142,7 +142,7 @@ post '/edit_ad/:id' do |id|
 	redirect "/ads/edit/#{id}"
    end
 
-   DB["UPDATE Ads SET title = ?, description = ?, category = ? WHERE id = ?",title, description,category,id].update
+   DB["UPDATE Ads SET title = ?, description = ?, fk_category = ? WHERE id = ?",title, description,category,id].update
    session["success"] = "Updated ad number #{id}!"
    redirect "/ads/#{session["username"]}/list"
 end
@@ -202,8 +202,13 @@ end
 
 # List all users
 get '/users/list' do
-  users = DB["SELECT * FROM Users ORDER BY creation_date DESC"]
-  erb(:users, :layout => true, :locals => {:users => users})
+  if session["username"] == "pascal" or session["username"] == "joakim"
+  	users = DB["SELECT * FROM Users ORDER BY creation_date DESC"]
+  	erb(:users, :layout => true, :locals => {:users => users})
+  else
+	session["error"] = "HACKER FAIL :D"
+	redirect '/'
+  end
 end
 
 # Show new user form
@@ -237,6 +242,9 @@ end
 # List all ads belonging to a user
 get '/ads/:username/list' do |username|
    ads = DB["SELECT * FROM Ads WHERE fk_username = ?",username]
-   redirect '/ads/list' if ads.empty?
+   if ads.empty?
+	   session["warning"] = "You don't have any ads yet."
+	   redirect '/users/dashboard'
+   end
    erb(:ads, :layout => true, :locals => {:mode => :user, :username => username, :ads => ads})
 end

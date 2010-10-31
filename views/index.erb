@@ -28,7 +28,7 @@
 	Category: <select name="category" style="width:150px">
 	<!-- Ruby code that automatically generates all the categories 
 	in the database -->
-	<%= erb(:_category_list, :layout => false, :locals => {:value => 0}) %>	
+	<%= erb(:_category_list, :layout => false, :locals => {:mode => :dropdown}) %>	
 </select>
 	<input type="submit" value="Search" />
 </form>
@@ -46,7 +46,7 @@ other people happy!</p><br>
 <ul id="nav">
 <!-- Ruby code that automatically generates all the categories 
 in the database -->
-	<%= erb(:_category_list, :layout => false, :locals => {:value => 1}) %>	
+	<%= erb(:_category_list, :layout => false, :locals => {:mode => :list}) %>	
 </ul></div>
 <div class="clearer"> </div>
 </div>

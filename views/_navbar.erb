@@ -1,0 +1,9 @@
+<a href="/">[Home]</a>
+<% if session["username"] %>
+   <a href="/users/dashboard">[Dashboard]</a>
+	<a href="/ads/<%= session["username"]%>/list">[My Ads]</a>
+<% end %>
+<%= erb(:_category_list, :layout => false, :locals => {:mode => :navbar}) %>
+<% if session["username"] %>
+	<a href="/logout">[Logout]</a>
+<% end %>

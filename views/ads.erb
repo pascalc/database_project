@@ -24,6 +24,7 @@
 ]</h1>
 <%= erb :_loggedin %>
 <%= erb :_flash %>
+<%= erb :_navbar %>
 <hr/>
 
 <table class="striped_table" summary="List of Ads">
@@ -48,7 +49,7 @@
         			<tr class="odd">
         		<% end %>
         				<td><a href="/ads/show/<%= row[:id] %>"><%= row[:title] %></a></td>
-            		<td><a href="/tag/<%= row[:category] %>"><%= row[:category] %></a></td>
+            		<td><a href="/tag/<%= row[:fk_category] %>"><%= row[:fk_category] %></a></td>
             		<td><%= row[:creation_date] %></td>
             		<% if mode == :user and username == session["username"] %>
 							<td><a href="/ads/edit/<%= row[:id] %>">[Edit]</a> <a href="/ads/delete/<%= row[:id] %>">[Delete]</a></td>            			

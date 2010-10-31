@@ -7,7 +7,7 @@
 	<tbody>
 	<tr>
 		<td> <%= alive %> days</td>
-		<td> <%= nr_ads %> ads</td>
+		<td> <a href="/ads/<%= session["username"] %>/list"><%= nr_ads %> ads</a></td>
 	</tr>
 	</tbody>
 </table>

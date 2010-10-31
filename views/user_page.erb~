@@ -28,7 +28,7 @@
 	Category: <select name="category" style="width:150px">
 	<!-- Ruby code that automatically generates all the categories 
 	in the database -->
-	<%= erb(:_category_list, :layout => false, :locals => {:categories => categories,:value => 0}) %>	
+	<%= erb(:_category_list, :layout => false, :locals => {:mode => :dropdown}) %>	
 </select>
 	<input type="submit" value="Search" />
 </form>
@@ -37,11 +37,7 @@
 <h2><%= erb :_loggedin %></h2>
 <%= erb :_flash %>
 <!-- Puts out time since user created and nr of ads the user posted -->
-<<<<<<< Updated upstream:views/user_page.erb
 <%= erb(:_user_info, :layout => false, :locals => {:alive => alive, :nr_ads => nr_ads}) %>
-=======
-<%= erb(:_user_info, :layout => false, :locals => {:alived => alive, :nr_ads => nr_ads}) %>
->>>>>>> Stashed changes:views/user_page.erb
 </div>
 <div id="right">
 <ul id="nav">

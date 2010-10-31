@@ -6,13 +6,8 @@
 	</thead>
 	<tbody>
 	<tr>
-<<<<<<< Updated upstream:views/_user_info.erb
-		<td> <%= alive %> days </td>
-		<td> <%= nr_ads %> ads </td>
-=======
 		<td> <%= alive %> days</td>
 		<td> <%= nr_ads %> ads</td>
->>>>>>> Stashed changes:views/_user_info.erb
 	</tr>
 	</tbody>
 </table>
