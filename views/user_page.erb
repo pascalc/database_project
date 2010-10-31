@@ -34,14 +34,10 @@
 </form>
 </div>
 <div id="center">
-<h2>Welcome to ADSPACE!</h2>
-<%= erb :_loggedin %>
+<h2><%= erb :_loggedin %></h2>
 <%= erb :_flash %>
-<p>Welcome to ADSPACE, your place for ads on the web! Free of charge, unlimited amounts of ads and many visitors make this the ideal
-place for peer-to-peer business online! </p>
-<p> If this is the first time for you, we hope that it will be many more, so please register a <a href="/users/new">new account</a> and start making your self and
-other people happy!</p><br>
-<p> We here at ADSPACE wish you a happy day and hope you will be back</p> 
+<!-- Puts out time since user created and nr of ads the user posted -->
+<%= erb(:_user_info, :layout => false, :locals => {:alived = alive, :nr_ads => nr_ads}) %>
 </div>
 <div id="right">
 <ul id="nav">

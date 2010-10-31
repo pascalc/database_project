@@ -1,0 +1,1 @@
+<div class="loggedin"><p><% if session["username"] %><%= session["username"] %><% end %></p></div>
