@@ -10,8 +10,8 @@ div.loggedin
 div.logout
 {
 	position:relative;
-	text-align:right;		
-	bottom:-10px;
+	text-align:right;
+	bottom:-20px;
 	right:50px;
 	margin:0px;
 }	
@@ -142,7 +142,7 @@ a:hover
 }
 #header {
 	margin: 0px;
-	padding: 0px;
+	padding: 50px;
 	height: 100px;
 	width: auto;
 	background-color: #f1f1f1;
@@ -200,6 +200,12 @@ a:hover
 	line-height: 1.8em;
 	background-color: #f1f1f1;
 }
+
+#header.h1 
+{
+	padding:50spx;
+}
+
 h1 {
 	font-size: 26px;
 	margin: 0px;
