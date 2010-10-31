@@ -2,9 +2,13 @@
 	<% r = row[:name] %>
 	<% case(mode) when :dropdown %>	<!-- # If value equals 0 then generate dropdown box -->
 		<option value="<%= r %>"><%= r.capitalize %></option>
-	<% when :list %>		<!-- # Else generate a list with links to each category -->
+	<% when :list %>		<!-- # Else generate a list with links to each category -->		
 		<li><a href="/tag/<%= r %>" title="<%= r %>"><%= r.capitalize %></a></li>
    <% when :navbar %>
 		<a href="/tag/<%= r %>" title="<%= r %>">[<%= r.capitalize %>]</a>	
 	<% end %>
+<% end %>
+
+<% if mode == :list %>
+	<li><a href="/ads/list">All ads</a></li>
 <% end %>

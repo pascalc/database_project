@@ -4,6 +4,7 @@
 	<a href="/ads/<%= session["username"]%>/list">[My Ads]</a>
 <% end %>
 <%= erb(:_category_list, :layout => false, :locals => {:mode => :navbar}) %>
+<a href="/ads/list">[All ads]</a>
 <% if session["username"] %>
 	<a href="/logout">[Logout]</a>
 <% end %>
