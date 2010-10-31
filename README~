@@ -2,7 +2,7 @@ SETTING UP THE DATABASE
 The database we are using is mysql-client-5.1 and mysql-server-5.1 plus that it might be some other packages installed to support these two.
 
 After, if needed, installing mysql type 'mysql -u root' (in the command line if using linux) to enter mysql as root user.
-When logged in, create a new database called 'dbproject' in the following way 'mysql> create database dbproject;'. After creating the database it is time to set up a user, for sake of simplicity, called 'dbproject' with password 'dbproject'. It is similiar to above, namely 'mysql> create user dbproject;'. 
+When logged in, create a new database called 'dbproject' in the following way 'mysql> create database dbproject;'. After creating the database it is time to set up a user, for sake of simplicity, called 'dbproject' with password 'dbproject'. It is similiar to above, namely 'mysql> create user dbproject identified by dbproject;'. 
 
 When that is set up, it is time to grant access to user 'dbproject' to access database 'dbproject'. It is done in the following way:
 'mysql> GRANT ACCESS TO dbproject.* TO dbproject@localhost;'. That gives the user the privilege to alter with the tables in dbproject.

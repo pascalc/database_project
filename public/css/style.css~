@@ -25,6 +25,11 @@ color: #D8000C;
 background-color: #FFBABA;
 }
 
+/* General */
+div.left {
+	text-align: left;
+}
+
 /* ------------------
  styling for the tables 
    ------------------   */
@@ -72,6 +77,17 @@ body {
 	margin: 0px;
 	padding: 20px 0px 20px 0px;
 }
+a 
+{
+	color: #666;
+	text-decoration: none;
+	/*display: block;*/
+}
+a:hover 
+{
+	color: #999;
+	text-decoration: none;
+}	
 #wrapper {
 	width: 956px;
 	padding: 10px;
