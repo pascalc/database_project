@@ -1,1 +1,0 @@
-<div class="loggedin"><p><% if session["username"] %>Welcome to ADSPACE <%= session["username"] %><% end %></p></div>
