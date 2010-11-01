@@ -19,10 +19,9 @@
 <%= erb :_left_navbar %>
 </div>
 <div id="center">
-<h2>Welcome to ADSPACE <%= session["username"] %></h2>
+<h2>Users in database</h2>
 <%= erb :_flash %>
-<!-- Puts out time since user created and nr of ads the user posted -->
-<%= erb(:_user_info, :layout => false, :locals => {:alive => alive, :nr_ads => nr_ads}) %>
+<%= erb(:_show_users, :layout => false, :locals => {:table => table}) %>
 </div>
 <div id="right">
 <ul id="nav">
@@ -33,7 +32,6 @@ in the database -->
 <div class="clearer"> </div>
 </div>
 <div id="footer"><p>© ADSPACE 2010</p></div>
-
 </div>
 </body>
 </html>

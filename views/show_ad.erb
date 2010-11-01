@@ -18,13 +18,16 @@
 <%= erb :_navbar %>
 <hr>
 <div class="left">
-<p> ID: <%= ad[:id] %> </p>
-<p> Category: <%= ad[:fk_category] %> </p>
-<p> Date: <%= ad[:creation_date] %> </p>
-<p> Posted by: <%= ad[:fk_username] %> </p>
-<p> Contact email: <a href="mailto:<%= ad[:email] %>" ><%= ad[:email] %> </a></p>
+<p> <b>ID:</b> <%= ad[:id] %> </p>
+<p> <b>Category:</b> <%= ad[:fk_category] %> </p>
+<p> <b>Date:</b> <%= ad[:creation_date] %> </p>
+<p> <b>Posted by:</b> <%= ad[:fk_username] %> </p>
+<p> <b>Contact email:</b> <a href="mailto:<%= ad[:email] %>" ><%= ad[:email] %> </a></p>
 </div>
 <hr/>
+<div class="desc">
 <p><%= ad[:description] %></p> 
+</div>
+<hr/>
 </body>
 </html>

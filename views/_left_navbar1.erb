@@ -1,17 +1,15 @@
 <% if session["username"] %>    <!-- If a user is logged in -->
        <ul id="nav">
-       <li><a href="/users/dashboard">My page</a></li>
+       <li><a href="/users/dashboard">Back to main page</a></li>
 	<li><a href="/users/show">Show users</a></li>
-	<li><a href="/ads/new">New ad</a></li>
-	<li><a href="/ads/<%= session['username'] %>/list">My ads</a></li>
-	<!-- <li><a href="/users/search">Search user</a></li> -->
+	<li><a href="/ads/new" mehtod="get">New ad</a></li>
 	</ul>
-       <!-- Add an ad 
+       <!-- Add an ad -->
        <form name="new_ad" action="/ads/new" method="get" class="layout">
-       <input type="submit" value="Create new ad" /> </form> -->
-       <!-- Show users ads
+       <input type="submit" value="Create new ad" /> </form>
+       <!-- Show users ads -->
        <form name="show_ads" action="/ads/<%= session['username'] %>/list " method="get" class="layout">
-       <input type="submit" value="Show my ads" /> </form> -->
+       <input type="submit" value="Show my ads" /> </form>
 <% else %>
        <form name="login" action="/login" method="post" class="layout">
        Username: <input type="text" name="username" id="username" value="" style="width:150px"/><br />

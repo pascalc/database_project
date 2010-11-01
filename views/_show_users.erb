@@ -1,0 +1,15 @@
+<table class="striped_table">
+	<thead><tr>
+		<td style="color:#333"><b>Username</b></td>
+		<td style="color:#333"><b>Number of ads</b></td>
+	</tr>
+	</thead>
+	<tbody>
+	<% table.each do |row| %>
+	<tr>
+		<td><a href="/ads/<%= row[:fk_username] %>/list"><%= row[:fk_username] %></a></td>
+		<td> <%= row[:nr_ads] %> ads</td>
+	</tr>
+	<% end %>
+	</tbody>
+</table>

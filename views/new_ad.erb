@@ -12,14 +12,14 @@
 <body>
 <div id="wrapper">
 <div id="header"><h1><center>[ADSPACE]</center></h1>
-<% if session["username"] %><div class="logout"><a href="/logout">Logout</a> </div><% end %>
+<% if session["username"] %><div class="logout"><a href="/logout">Logout <%= session["username"] %></a> </div><% end %>
 </div>
 <div id="container">
 <div id="left">
 <%= erb :_left_navbar %>
 </div>
 <div id="center">
-
+<h2>Create new ad</h2>
 <form name="new_ad" action="/new_ad" method="post">
 Title *<br/>
 <input type="text" name="title" id="title" value="" class="layout"/><br />

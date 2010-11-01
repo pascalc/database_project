@@ -12,7 +12,7 @@
 <body>
 <div id="wrapper">
 <div id="header"><h1><center>[ADSPACE]</center></h1>
-<% if session["username"] %><div class="logout"><a href="/logout">Logout</a> </div><% end %>
+<% if session["username"] %><div class="logout"><a href="/logout">Logout <%= session["username"] %></a> </div><% end %>
 </div>
 <div id="container">
 <div id="left">

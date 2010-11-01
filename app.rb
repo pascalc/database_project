@@ -192,6 +192,21 @@ get '/users/dashboard' do
    erb(:user_page, :layout => true, :locals => {:nr_ads => nr_ads, :alive => alive})
 end
 
+# Show users list with number of ads
+get '/users/show' do
+  if not session["username"]
+	  session["warning"] = "Please log in first."
+	  redirect '/'
+  end
+
+  username = session["username"]
+  table = DB["SELECT fk_username, COUNT(*) as nr_ads FROM Ads GROUP BY fk_username"] #WHERE fk_username <> ?", username]
+  
+  erb(:show_users, layout => false, :locals => {:table => table})
+end
+
+# Search user
+
 # Log out
 get '/logout' do
    username = session["username"]
