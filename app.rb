@@ -99,14 +99,14 @@ post '/new_ad' do
    end
 
    begin 
-   	#DB["INSERT INTO \"Ads\" (id, title, description, fk_category, creation_date, fk_username)
-        #        VALUES (null, ?, ?, ?, null, ?)", title, description, category,session["username"]].insert
-	DB[:Ads].insert(
-		   :title => title,
-       		   :description => description,
-	   	   :fk_category => category,
-		   :creation_date => nil,
-		   :fk_username => session["username"])
+   	DB["INSERT INTO \"Ads\" (title, description, fk_category, fk_username)
+                VALUES (?, ?, ?, ?)", title, description, category,session["username"]].insert
+	#DB[:Ads].insert(
+	#	   :title => title,
+       	#	   :description => description,
+	 #  	   :fk_category => category,
+	#	   :creation_date => nil,
+	#	   :fk_username => session["username"])
    	session["success"] = "Created a new ad!"
    	redirect "/ads/#{session["username"]}/list"
    rescue
@@ -263,8 +263,8 @@ post '/new_user' do
    end
 
    begin 
-   	#DB["INSERT INTO \"Users\" VALUES (?,?,?,null)",username,password,email].insert
-	DB[:Users].insert(:username => username, :password => password, :email => email)
+   	DB["INSERT INTO \"Users\" VALUES (?,?,?,null)",username,password,email].insert
+	#DB[:Users].insert(:username => username, :password => password, :email => email)
    rescue
 	session["error"] = "Sorry, we already have a user called #{username}."
 	redirect '/users/new'
