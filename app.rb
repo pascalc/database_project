@@ -18,7 +18,8 @@ else
 end
 
 # Global variables
-$categories = DB["SELECT name FROM Categories"]
+#$categories = DB["SELECT name FROM Categories"]
+$categories = DB[:Categories]
 
 # Helper functions
 
@@ -28,11 +29,12 @@ def check_allowed(id)
 	session["warning"] = "Please log in first."
 	redirect '/'
    end
-   DB["SELECT * FROM Ads WHERE id = ?",id].each do |ad|
-	if not ad[:fk_username] == session["username"]
+   #DB["SELECT * FROM Ads WHERE id = ?",id].each do |ad|
+   DB[:Ads].filter("id = ?", id).each do |ad|	
+   	if not ad[:fk_username] == session["username"]
 		session["error"] = "Don't be naughty now."
 		redirect '/ads/list'
-	end
+   	end
    end
 end
 
@@ -47,13 +49,15 @@ end
 
 # List all ads
 get '/ads/list' do
-  ads = DB["SELECT * FROM Ads ORDER BY creation_date DESC"]
+  #ads = DB["SELECT * FROM Ads ORDER BY creation_date DESC"]
+  ads = DB[:Ads].order(:creation_date.desc)
   erb(:ads, :layout => true, :locals => {:mode => :list, :ads => ads})
 end
 
 # Category listings
 get '/tag/:cat' do |cat|
-   ads = DB["SELECT * FROM Ads WHERE fk_category = ? ORDER BY creation_date DESC",cat]
+   #ads = DB["SELECT * FROM Ads WHERE fk_category = ? ORDER BY creation_date DESC",cat]
+   ads = DB[:Ads].filter("fk_category = ?",cat).order(:creation_date.desc)
    if ads.empty?
    	session["error"] = "We don't have a #{cat} category."
         redirect '/ads/list'
@@ -65,7 +69,8 @@ end
 get '/ads/search' do
    query = params['query']
    category = params['category']
-   ads = DB["SELECT * FROM Ads WHERE fk_category = ? AND (title LIKE ? OR description LIKE ? OR fk_username LIKE ?)",category,"%#{query}%","%#{query}%","%#{query}%"]
+   #ads = DB["SELECT * FROM Ads WHERE fk_category = ? AND (title LIKE ? OR description LIKE ? OR fk_username LIKE ?)",category,"%#{query}%","%#{query}%","%#{query}%"]
+   ads = DB[:Ads].filter("fk_category = ? AND (title LIKE ? OR description LIKE ? OR fk_username LIKE ?)",category,"%#{query}%","%#{query}%","%#{query}%")
    if ads.empty?
    	session["error"] = "We couldn't find anything matching '#{query}' under #{category}."
         redirect '/'
@@ -94,8 +99,14 @@ post '/new_ad' do
    end
 
    begin 
-   	DB["INSERT INTO Ads (id, title, description, fk_category, creation_date, fk_username)
-                VALUES (null, ?, ?, ?, null, ?)", title, description, category,session["username"]].insert
+   	#DB["INSERT INTO Ads (id, title, description, fk_category, creation_date, fk_username)
+        #        VALUES (null, ?, ?, ?, null, ?)", title, description, category,session["username"]].insert
+	DB[:Ads].insert(:id => nil,
+		   :title => title,
+       		   :description => description,
+	   	   :fk_category => category,
+		   :creation_date => nil,
+		   :fk_username => session["username"])
    	session["success"] = "Created a new ad!"
    	redirect "/ads/#{session["username"]}/list"
    rescue
@@ -106,7 +117,8 @@ end
 
 # Show an ad
 get '/ads/show/:id' do |id|
-   ad = DB["SELECT * FROM Ads A, Users U WHERE A.id = ? AND U.username = A.fk_username",id]
+   #ad = DB["SELECT * FROM Ads A, Users U WHERE A.id = ? AND U.username = A.fk_username",id]
+   DB.from(:Ads,:Users).where(:Ads__fk_username => :Users__username).filter("Ads.id = ?".id)
    if ad.empty?
 	session["error"] = "Couldn't find the ad you were looking for."
 	redirect '/ads/list'
@@ -117,7 +129,8 @@ end
 # Delete an ad
 get '/ads/delete/:id' do |id|
    check_allowed(id) 
-   DB["DELETE FROM Ads WHERE id = ?", id].delete
+   #DB["DELETE FROM Ads WHERE id = ?", id].delete
+   DB[:Ads].filter("id = ?",id).delete
    session["success"] = "Deleted ad number #{id}"
    redirect "/ads/#{session["username"]}/list"
 end
@@ -125,7 +138,8 @@ end
 # Show the edit ad form
 get '/ads/edit/:id' do |id|
    check_allowed(id) 
-   ad = DB["SELECT * FROM Ads WHERE id = ?",id]
+   #ad = DB["SELECT * FROM Ads WHERE id = ?",id]
+   ad = DB[:Ads].filter("id = ?", id)
    if ad.empty?
 	   session["error"] = "We don't have an ad with an id of #{id}"
 	   redirect "/ads/#{session["username"]}/list"
@@ -146,7 +160,8 @@ post '/edit_ad/:id' do |id|
 	redirect "/ads/edit/#{id}"
    end
 
-   DB["UPDATE Ads SET title = ?, description = ?, fk_category = ? WHERE id = ?",title, description,category,id].update
+   #DB["UPDATE Ads SET title = ?, description = ?, fk_category = ? WHERE id = ?",title, description,category,id].update
+   DB[:Ads].filter("id = ?",id).update(:title => title, :description => description, :fk_category => category)
    session["success"] = "Updated ad number #{id}!"
    redirect "/ads/#{session["username"]}/list"
 end
@@ -158,7 +173,8 @@ post '/login' do
    username = params['username']
    password = params['password']
    
-   result = DB["SELECT username,password FROM Users WHERE username = ? AND password = ?",username,password]
+   #result = DB["SELECT username,password FROM Users WHERE username = ? AND password = ?",username,password]
+   result = DB[:Users].filter("username = ? AND password = ?",username,password)
    if result.empty?
       session["error"] = "Log in failed, please try again."
       redirect '/'
@@ -177,19 +193,22 @@ get '/users/dashboard' do
    end
    username = session["username"]
       
-   num_ads_query = DB["SELECT COUNT(*) AS number FROM Ads WHERE fk_username = ?", username] 
-   if num_ads_query.empty?
-	   nr_ads = 0
-   else
-	   nr_ads = nil
-   	   num_ads_query.each do |row|
-		nr_ads = row[:number]
-   	   end
-   end
+   #num_ads_query = DB["SELECT COUNT(*) AS number FROM Ads WHERE fk_username = ?", username] 
+   #if num_ads_query.empty?
+	#   nr_ads = 0
+   #else
+#	   nr_ads = nil
+ #  	   num_ads_query.each do |row|
+#		nr_ads = row[:number]
+ #  	   end
+  # end
+
+   nr_ads = DB[:Ads].filter("fk_username = ?",username).count
 
    creation_date = nil
-   DB["SELECT creation_date from Users WHERE username = ?", username].each do |row|
-	creation_date = row[:creation_date]
+   #DB["SELECT creation_date from Users WHERE username = ?", username].each do |row|
+   DB[:Users].filter("username = ?",username).each do |row|	
+   	creation_date = row[:creation_date]
    end
    alive = ((Time.now - creation_date)/(60*60*24)).round   
 
@@ -204,12 +223,9 @@ get '/users/show' do
   end
 
   username = session["username"]
-  table = DB["SELECT fk_username, COUNT(*) as nr_ads FROM Ads GROUP BY fk_username"] #WHERE fk_username <> ?", username]
-  
+  table = DB["SELECT fk_username, COUNT(*) as nr_ads FROM \"Ads\" GROUP BY fk_username"] #WHERE fk_username <> ?", username]
   erb(:show_users, layout => false, :locals => {:table => table})
 end
-
-# Search user
 
 # Log out
 get '/logout' do
@@ -222,8 +238,9 @@ end
 # List all users
 get '/users/list' do
   if session["username"] == "pascal" or session["username"] == "joakim"
-  	users = DB["SELECT * FROM Users ORDER BY creation_date DESC"]
-  	erb(:users, :layout => true, :locals => {:users => users})
+  	#users = DB["SELECT * FROM Users ORDER BY creation_date DESC"]
+  	users = DB[:Users].order(:creation_date.desc)
+	erb(:users, :layout => true, :locals => {:users => users})
   else
 	session["error"] = "HACKER FAIL :D"
 	redirect '/'
@@ -247,7 +264,8 @@ post '/new_user' do
    end
 
    begin 
-   	DB["INSERT INTO Users VALUES (?,?,?,null)",username,password,email].insert
+   	#DB["INSERT INTO Users VALUES (?,?,?,null)",username,password,email].insert
+	DB[:Users].insert(:username => username, :password => password, :email => email)
    rescue
 	session["error"] = "Sorry, we already have a user called #{username}."
 	redirect '/users/new'
@@ -260,7 +278,8 @@ end
 
 # List all ads belonging to a user
 get '/ads/:username/list' do |username|
-   ads = DB["SELECT * FROM Ads WHERE fk_username = ?",username]
+   #ads = DB["SELECT * FROM Ads WHERE fk_username = ?",username]
+   ads = DB[:Ads].filter("fk_username = ?", username)
    if ads.empty?
 	   session["warning"] = "You don't have any ads yet."
 	   redirect '/users/dashboard'
