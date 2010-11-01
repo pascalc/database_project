@@ -9,9 +9,10 @@ require 'date'
 
 enable :sessions
 
-# Set up the database connection
+HEROKU = ENV['DATABASE_URL'] ? true : false
 
-if ENV['DATABASE_URL']
+# Set up the database connection
+if HEROKU
 	DB = Sequel.connect(ENV['DATABASE_URL'])
 else
 	DB = Sequel.mysql('dbproject',:host => "localhost", :user => "dbproject")
@@ -98,15 +99,14 @@ post '/new_ad' do
 	redirect '/ads/new'
    end
 
+   if HEROKU
+	   session["error"] = "Disabled on Heroku."
+	   redirect '/users/dashboard'
+   end
+
    begin 
-   	DB["INSERT INTO \"Ads\" (title, description, fk_category, fk_username)
-                VALUES (?, ?, ?, ?)", title, description, category,session["username"]].insert
-	#DB[:Ads].insert(
-	#	   :title => title,
-       	#	   :description => description,
-	 #  	   :fk_category => category,
-	#	   :creation_date => nil,
-	#	   :fk_username => session["username"])
+   	DB["INSERT INTO Ads (title, description, fk_category, fk_username)
+                VALUES (?, ?, ?, ?)", title, description, category,session["username"]].insert	
    	session["success"] = "Created a new ad!"
    	redirect "/ads/#{session["username"]}/list"
    rescue
@@ -117,7 +117,12 @@ end
 
 # Show an ad
 get '/ads/show/:id' do |id|
-   ad = DB["SELECT * FROM \"Ads\" A, \"Users\" U WHERE A.id = ? AND U.username = A.fk_username",id]
+   if HEROKU
+	   session["error"] = "Disabled on Heroku."
+	   redirect '/users/dashboard'
+   end
+
+   ad = DB["SELECT * FROM Ads A, Users U WHERE A.id = ? AND U.username = A.fk_username",id]
    if ad.empty?
 	session["error"] = "Couldn't find the ad you were looking for."
 	redirect '/ads/list'
@@ -222,7 +227,11 @@ get '/users/show' do
   end
 
   username = session["username"]
-  table = DB["SELECT fk_username, COUNT(*) as nr_ads FROM \"Ads\" GROUP BY fk_username"] #WHERE fk_username <> ?", username]
+  if HEROKU
+  	table = DB["SELECT fk_username, COUNT(*) as nr_ads FROM \"Ads\" GROUP BY fk_username"] #WHERE fk_username <> ?", username]
+  else
+	table = DB["SELECT fk_username, COUNT(*) as nr_ads FROM Ads GROUP BY fk_username"] #WHERE fk_username <> ?", username]
+  end
   erb(:show_users, layout => false, :locals => {:table => table})
 end
 
@@ -262,9 +271,13 @@ post '/new_user' do
 	redirect '/users/new'
    end
 
+   if HEROKU
+	   session["error"] = "Disabled on Heroku."
+	   redirect '/users/dashboard'
+   end
+
    begin 
-   	DB["INSERT INTO \"Users\" VALUES (?,?,?,null)",username,password,email].insert
-	#DB[:Users].insert(:username => username, :password => password, :email => email)
+   	DB["INSERT INTO Users VALUES (?,?,?,null)",username,password,email].insert
    rescue
 	session["error"] = "Sorry, we already have a user called #{username}."
 	redirect '/users/new'
@@ -277,7 +290,7 @@ end
 
 # List all ads belonging to a user
 get '/ads/:username/list' do |username|
-   #ads = DB["SELECT * FROM Ads WHERE fk_username = ?",username]
+  # ads = DB["SELECT * FROM Ads WHERE fk_username = ?",username]
    ads = DB[:Ads].filter("fk_username = ?", username)
    if ads.empty?
 	   session["warning"] = "You don't have any ads yet."
