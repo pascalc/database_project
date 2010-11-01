@@ -118,11 +118,10 @@ end
 # Show an ad
 get '/ads/show/:id' do |id|
    if HEROKU
-	   session["error"] = "Disabled on Heroku."
-	   redirect '/users/dashboard'
+	ad = DB["SELECT * FROM \"Ads\" A, \"Users\" U WHERE A.id = ? AND U.username = A.fk_username",id]
+   else
+	ad = DB["SELECT * FROM Ads A, Users U WHERE A.id = ? AND U.username = A.fk_username",id]
    end
-
-   ad = DB["SELECT * FROM Ads A, Users U WHERE A.id = ? AND U.username = A.fk_username",id]
    if ad.empty?
 	session["error"] = "Couldn't find the ad you were looking for."
 	redirect '/ads/list'
