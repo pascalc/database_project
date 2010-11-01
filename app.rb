@@ -99,14 +99,14 @@ post '/new_ad' do
    end
 
    begin 
-   	DB["INSERT INTO \"Ads\" (id, title, description, fk_category, creation_date, fk_username)
-                VALUES (null, ?, ?, ?, null, ?)", title, description, category,session["username"]].insert
-	#DB[:Ads].insert(:id => nil,
-	#	   :title => title,
-       	#	   :description => description,
-	#   	   :fk_category => category,
-	#	   :creation_date => nil,
-	#	   :fk_username => session["username"])
+   	#DB["INSERT INTO \"Ads\" (id, title, description, fk_category, creation_date, fk_username)
+        #        VALUES (null, ?, ?, ?, null, ?)", title, description, category,session["username"]].insert
+	DB[:Ads].insert(
+		   :title => title,
+       		   :description => description,
+	   	   :fk_category => category,
+		   :creation_date => nil,
+		   :fk_username => session["username"])
    	session["success"] = "Created a new ad!"
    	redirect "/ads/#{session["username"]}/list"
    rescue
@@ -159,8 +159,8 @@ post '/edit_ad/:id' do |id|
 	redirect "/ads/edit/#{id}"
    end
 
-   DB["UPDATE \"Ads\" SET title = ?, description = ?, fk_category = ? WHERE id = ?",title, description,category,id].update
-   #DB[:Ads].filter("id = ?",id).update(:title => title, :description => description, :fk_category => category)
+   #DB["UPDATE \"Ads\" SET title = ?, description = ?, fk_category = ? WHERE id = ?",title, description,category,id].update
+   DB[:Ads].filter("id = ?",id).update(:title => title, :description => description, :fk_category => category)
    session["success"] = "Updated ad number #{id}!"
    redirect "/ads/#{session["username"]}/list"
 end
@@ -263,8 +263,8 @@ post '/new_user' do
    end
 
    begin 
-   	DB["INSERT INTO \"Users\" VALUES (?,?,?,null)",username,password,email].insert
-	#DB[:Users].insert(:username => username, :password => password, :email => email)
+   	#DB["INSERT INTO \"Users\" VALUES (?,?,?,null)",username,password,email].insert
+	DB[:Users].insert(:username => username, :password => password, :email => email)
    rescue
 	session["error"] = "Sorry, we already have a user called #{username}."
 	redirect '/users/new'
