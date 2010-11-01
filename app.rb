@@ -11,7 +11,11 @@ enable :sessions
 
 # Set up the database connection
 
-DB = Sequel.mysql('dbproject',:host => "localhost", :user => "dbproject")
+if ENV['DATABASE_URL']
+	DB = Sequel.connect(ENV['DATABASE_URL'])
+else
+	DB = Sequel.mysql('dbproject',:host => "localhost", :user => "dbproject")
+end
 
 # Global variables
 $categories = DB["SELECT name FROM Categories"]
